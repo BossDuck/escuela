@@ -1,0 +1,73 @@
+{% extends 'layouts/layout.html' %}
+{% load widget_tweaks %}
+
+{% block title %}
+Añadir Alumno
+{% endblock title %}
+
+{% block titulo %}Añadir Alumno{% endblock titulo %}
+
+{% block content %}
+
+     <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Datos Personales</h3>
+          
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+              <i class="fas fa-minus"></i></button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+              <i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          {% if messages %}
+                  {% for message in messages %}
+                    {% if message.tags == 'success' %}
+                      <div class="alert alert-success col-12 d-flex justify-content-center" role="alert">{{message}}</div>
+                    {% else %}
+                      <div class="alert alert-danger col-12 d-flex justify-content-center" role="alert">{{message}}</div>
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+          {% if form.errors %}
+            {% for error in form.errors %}
+              <div class="alert alert-warning col-12" role="alert">
+                {{error}}
+              </div>
+            {% endfor %}
+          {% endif %}
+            {% for campo in form %}
+              <div class="form-group">
+                  <label>{{campo.label}}</label>
+                  {{campo|add_class:'form-control'|attr:'autocomplete:off'}}
+              </div>
+            {% endfor %}
+
+            <div class="form-group d-flex justify-content-center">
+              <button class="btn btn-dark" type="submit"><i class="fas fa-save"></i>    Guardar</button>
+            </div>
+            
+        </form>
+          
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+          Footer
+        </div>
+        <!-- /.card-footer-->
+      </div>
+      <!-- /.card -->
+
+{% endblock content %}
+
+
+{% block scripts %}
+<script>
+  CKEDITOR.replace(id_padecimientos);
+</script>
+
+{% endblock scripts %}

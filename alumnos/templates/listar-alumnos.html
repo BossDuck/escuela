@@ -1,0 +1,106 @@
+{% extends 'layouts/layout.html' %}
+{% load static %}
+{% block title %}Lista Alumnos{% endblock title %}
+{% block titulo %}Alumnos{% endblock titulo %}
+{% block content %}
+
+    <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Alumnos</h3>
+          
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+              <i class="fas fa-minus"></i></button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+              <i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+        {% if messages %}
+                  {% for message in messages %}
+                    {% if message.tags == 'success' %}
+                      <div class="alert alert-success col-12 d-flex justify-content-center" role="alert">{{message}}</div>
+                    {% else %}
+                      <div class="alert alert-danger col-12 d-flex justify-content-center" role="alert">{{message}}</div>
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+            <table class="table table-hover" id="TablaAlumnos">
+                <thead class="thead-dark">
+                    <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellidos</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Grupo</th>
+                    <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    {% for alumno in alumnos %}
+                    <tr>
+                        <th scope="row">{{alumno.id}}</th>
+                        <td>{{alumno.first_name}}</td>
+                        <td>{{alumno.last_name}}</td>
+                        <td>{{alumno.username}}</td>
+                        <td>{{alumno.grupo}}</td>
+                        <td class="d-flex justify-content-center">
+                            <a href="{% url 'editar-alumno' alumno.id %}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                            <a href="{% url 'calificar-alumno' alumno.id %}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#eliminar{{alumno.id}}">
+                              <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <!-- Modal -->
+                              <div class="modal fade" id="eliminar{{alumno.id}}" tabindex="-1" role="dialog" aria-labelledby="eliminar{{alumno.id}}Label" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="eliminar{{alumno.id}}Label">¿Está seguro de eliminar el alumno?</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                     <p>{{alumno.first_name}} {{alumno.last_name}} </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                      <a href="{% url 'eliminar-alumno' alumno.id %}" class="btn btn-danger">Sí</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                    {% endfor %}
+                        
+                </tbody>
+            
+            </table>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+          Footer
+        </div>
+        <!-- /.card-footer-->
+      </div>
+      <!-- /.card -->
+
+{% endblock content %}
+
+{% block scripts %}
+    <script>
+  $(function () {
+    $("#TablaAlumnos").DataTable({
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+        },
+      "responsive": true,
+      "autoWidth": false,
+    });
+    
+  });
+</script>
+{% endblock scripts %}

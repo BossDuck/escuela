@@ -1,0 +1,73 @@
+{% extends 'layouts/layout.html' %}
+{% block title %}Editar Evento{% endblock title %}
+{% load widget_tweaks %}
+
+{% block content %}
+    
+    <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Editar: <strong>{{evento.first_name}}</strong></h3>
+          
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+              <i class="fas fa-minus"></i></button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+              <i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                {% if messages %}
+                  {% for message in messages %}
+                    {% if message.tags == 'success' %}
+                      <div class="alert alert-success col-12 d-flex justify-content-center" role="alert">{{message}}</div>
+                    {% else %}
+                      <div class="alert alert-danger col-12 d-flex justify-content-center" role="alert">{{message}}</div>
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+                {% if form.errors %}
+                    {% for error in form.errors %}
+                    <div class="alert alert-warning col-12" role="alert">
+                        {{error}}
+                    </div>
+                    {% endfor %}
+                {% endif %}
+                   <div class="form-group">
+                        <label>Titulo</label>
+                        <input type="text" class="form-control" name="titulo" value="{{evento.titulo}}">
+                    </div>
+                    <div class="form-group">
+                  <label>Descripción</label>
+                  <textarea class="form-control" name="descripcion" rows="3" value="evento.descripcion"></textarea>
+                </div> 
+                 <div class="form-group">
+                        <label>Fecha de evento</label>
+                        <input type="datetime-local" class="form-control" name="fecha">
+                    </div>  
+              <div class="form-group">
+                        <label>Escoge color de Evento</label>
+                        <select multiple class="form-control" name="tipoEvento">
+                          <option value="28a745">Verde</option>
+                          <option value="ffc107">Amarillo</option>
+                          <option value="877F7F">Gris</option>
+                          <option value="02BEFF">Azul</option>
+                          <option value="dc3545">Rojo</option>
+                        </select>
+                    </div>
+                    <div class="form-group d-flex justify-content-center">
+                    <button class="btn btn-dark" type="submit"><i class="fas fa-save"></i>    Actualizar</button>
+                    </div>        
+            </form>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+          Footer
+        </div>
+        <!-- /.card-footer-->
+      </div>
+      <!-- /.card -->
+
+{% endblock content %}

@@ -1,0 +1,42 @@
+{% extends 'layouts/layout.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}Tarea{% endblock title %}
+{% block titulo %}Tarea{% endblock titulo %}
+
+{% block content %}
+    <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Tarea: <strong>{{tarea.titulo}}</strong></h3>
+          
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+              <i class="fas fa-minus"></i></button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+              <i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+            <p class="card-text"><strong>Descripción:</strong></p>
+            <p class="card-text">{{tarea.descripcion}}</p>
+            <p class="card-text"><strong>Contenido:</strong></p>
+            <p class="card-text">{{tarea.contenido|safe}}</p>
+            <p class="card-text"><strong>Fecha de entrega:</strong></p>
+            <p class="card-text">{{tarea.fecha_entrega}}</p>
+            {% if tarea.documento != 'null' and tarea.documento.url|length >= 1 %}
+            <a href="{{tarea.documento.url}}">{{tarea.documento}}</a>
+            {% endif %}
+        
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+          Footer
+        </div>
+        <!-- /.card-footer-->
+      </div>
+      <!-- /.card -->
+
+
+
+{% endblock content %}

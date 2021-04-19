@@ -1,0 +1,87 @@
+{% extends 'layouts/layout.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}Añadir Tarea{% endblock title %}
+{% block titulo %}Datos de la tarea{% endblock titulo %}
+
+{% block content %}
+    <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Tarea</h3>
+          
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+              <i class="fas fa-minus"></i></button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+              <i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+            <form method='POST' enctype="multipart/form-data">
+               {% csrf_token %}
+               {% if messages %}
+                  {% for message in messages %}
+                    {% if message.tags == 'success' %}
+                      <div class="alert alert-success col-12 d-flex justify-content-center" role="alert">{{message}}</div>
+                    {% else %}
+                      <div class="alert alert-danger col-12 d-flex justify-content-center" role="alert">{{message}}</div>
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+               <div class="row">
+                    <div class="form-group col-8">
+                        <label>Titulo</label>
+                        <input type="text" class="form-control" name="titulo">
+                    </div>
+                    <div class="form-group col-4">
+                        <label>Fecha de entrega</label>
+                        <input type="datetime-local" class="form-control" name="fecha">
+                    </div>  
+                    <div class="form-group col-12">
+                        <label>Decripción</label>
+                        <input type="text" class="form-control" name="descripcion">
+                    </div>
+                    <div class="form-group col-12">
+                        <label>Contenido</label>
+                        <textarea class="form-control" id="contenido" name="contenido" rows="3"></textarea>
+                    </div>
+                    <div class="form-group col-12">
+                        <label>Documento:</label>
+                        <input type="file" class="form-control" name="documento">
+                    </div>
+                    <div class="form-group col-12">
+                        <label>Escoge materia</label>
+                        <select class="form-control" name="materia">
+                        <option disabled selected>Selecciona una materia</option>
+                        {% for materia in materias %}
+                            <option value='{{materia.id}}'>{{materia.nombre}}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group d-flex justify-content-center col-12">             
+                        <button class="btn btn-dark" type="submit"><i class="fas fa-save"></i>    Guardar</button>
+                    </div>
+                    
+                </div>
+            </form>
+            
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+          Footer
+        </div>
+        <!-- /.card-footer-->
+      </div>
+      <!-- /.card -->
+
+
+
+{% endblock content %}
+
+{% block scripts %}
+<script>
+  CKEDITOR.replace(contenido);
+</script>
+
+{% endblock scripts %}

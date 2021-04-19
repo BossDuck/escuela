@@ -1,0 +1,79 @@
+{% extends 'layouts/layout.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}Añadir Grupo{% endblock title %}
+{% block titulo %}Datos del Grupo{% endblock titulo %}
+{% block content %}
+    <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Datos del grupo</h3>
+          
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+              <i class="fas fa-minus"></i></button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+              <i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+        <form method="POST">
+          {% csrf_token %}
+          
+          {% if messages %}
+            {% for message in messages %}
+            {% if message.tags == 'success' %}
+              <div class="alert alert-success col-12 d-flex justify-content-center" role="alert">{{message}}</div>
+            {% else %}
+              <div class="alert alert-danger col-12 d-flex justify-content-center" role="alert">{{message}}</div>
+            {% endif %}
+              
+            {% endfor %}
+          {% endif %}
+          
+             
+              <div class="form-group">
+                        <label>Titulo</label>
+                        <input type="text" class="form-control" name="titulo">
+                    </div>
+                    <div class="form-group">
+                  <label>Descripción</label>
+                  <textarea class="form-control" name="descripcion" rows="3"></textarea>
+                </div> 
+                 <div class="form-group">
+                        <label>Fecha de evento</label>
+                        <input type="datetime-local" class="form-control" name="fecha">
+                    </div>  
+              {% comment %}
+                <div class="form-group">
+                          <label>Escoge color de Evento</label>
+                          <select multiple class="form-control" name="tipoEvento">
+                            <option value="28a745" class="fas fa-square text-success"></option>
+                            <option value="ffc107" class="fas fa-square text-warning"></option>
+                            <option value="877F7F" class="fas fa-square text-dark"></option>
+                            <option value="02BEFF" class="fas fa-square text-primary"></option>
+                            <option value="dc3545" class="fas fa-square text-danger"></option>
+                          </select>
+                      </div>
+              {% endcomment %}
+                    <div class="form-group">
+                      <label class="form-label">Selecciona Color del Evento</label>
+                      <input type="color" value="#ff0000" name="tipoEvento">
+                    </div>
+             
+            <div class="form-group d-flex justify-content-center">             
+                <button class="btn btn-dark" type="submit"><i class="fas fa-save"></i>    Guardar</button>
+            </div>
+            
+        </form>
+          
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+          Footer
+        </div>
+        <!-- /.card-footer-->
+      </div>
+      <!-- /.card -->
+
+{% endblock content %}

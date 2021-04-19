@@ -1,0 +1,107 @@
+{% extends 'layouts/layout.html' %}
+{% load static %}
+{% block title %}Lista Eventos{% endblock title %}
+{% block titulo %}Eventos{% endblock titulo %}
+{% block content %}
+
+    <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Eventos</h3>
+          
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+              <i class="fas fa-minus"></i></button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+              <i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+          {% if messages %}
+            {% for message in messages %}
+              {% if message.tags == 'success' %}
+                <div class="alert alert-success col-12 d-flex justify-content-center" role="alert">{{message}}</div>  
+              {% else %}
+                <div class="alert alert-danger col-12 d-flex justify-content-center" role="alert">{{message}}</div>
+              {% endif %}              
+              {% endfor %}
+          {% endif %}
+            <table class="table table-hover" id="TablaEventos">
+                <thead class="thead-dark">
+                    <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Título</th>
+                    <th scope="col">Fecha de Evento</th>
+                    <th scope="col">Descripcion</th>
+                    <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    {% for evento in eventos %}
+                    <tr>
+                        <th scope="row">{{evento.id}}</th>
+                        <td>{{evento.titulo}}</td>
+                        <td>{{evento.fecha_evento}}</td>
+                        <td>{{evento.descripcion}}</td>
+                        <td class="d-flex justify-content-center">
+                            <a href="{% url 'editar-evento' evento.id %}" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#eliminar{{evento.id}}">
+                              <i class="fas fa-trash"></i>
+                            </button>
+                            
+                            
+
+                        </td>
+                    </tr>
+                    <!-- Modal -->
+                              <div class="modal fade" id="eliminar{{evento.id}}" tabindex="-1" role="dialog" aria-labelledby="eliminar{{evento.id}}Label" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="eliminar{{evento.id}}Label">¿Está seguro de eliminar el evento?</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                     <p>{{evento.descripcion}}</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                      <a href="{% url 'eliminar-evento' evento.id %}" class="btn btn-danger">Sí</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                    {% endfor %}
+                        
+                </tbody>
+            
+            </table>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+          Footer
+        </div>
+        <!-- /.card-footer-->
+      </div>
+      <!-- /.card -->
+
+{% endblock content %}
+
+{% block scripts %}
+    <script>
+  $(function () {
+    $("#TablaEventos").DataTable({
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+        },
+      "responsive": true,
+      "autoWidth": false,
+    });
+    
+  });
+</script>
+{% endblock scripts %}

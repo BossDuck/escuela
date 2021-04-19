@@ -1,0 +1,59 @@
+{% extends 'layouts/layout.html' %}
+{% load static %}
+
+{% block title %}Materias{% endblock title %}
+{% block titulo %}Mis Materias{% endblock titulo %}
+
+{% block content %}
+    <!-- Default box -->
+      <div class="card row">
+        <div class="card-header">
+          <h3 class="card-title">Grupos</h3>
+          
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+              <i class="fas fa-minus"></i></button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+              <i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="card-body col-12">
+            <div class="row">
+
+            {% for grupo in grupos  %}
+            <div class="col-sm-6 col-lg-4">
+                <div class="card card-primary collapsed-card">
+                    <div class="card-header">
+                        <h3 class="card-title">{{grupo.nombre}}</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <h2 class="card-title">{{grupo.nombre}}</h2>
+                        <p class="card-text"><strong>Tutor:</strong> {{grupo.enrolado.first_name}} {{grupo.enrolado.last_name}}</p>
+                        <a href="{% url 'visualizar-grupo' grupo.id %}" class="btn btn-primary d-flex justify-content-center">Ir al grupo</a>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+            {% endfor %}
+                    
+
+            </div>
+            
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+          Footer
+        </div>
+        <!-- /.card-footer-->
+      </div>
+      <!-- /.card -->
+
+
+
+{% endblock content %}

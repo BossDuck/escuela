@@ -1,0 +1,62 @@
+{% extends 'layouts/layout.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}Añadir Periodo{% endblock title %}
+{% block titulo %}Datos del Periodo{% endblock titulo %}
+{% block content %}
+    <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Datos del Periodo</h3>
+          
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+              <i class="fas fa-minus"></i></button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+              <i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+        <form method="POST">
+          {% csrf_token %}
+          {% if messages %}
+            {% for message in messages %}
+            {% if message.tags == 'success' %}
+              <div class="alert alert-success col-12 d-flex justify-content-center" role="alert">{{message}}</div>
+            {% else %}
+              <div class="alert alert-danger col-12 d-flex justify-content-center" role="alert">{{message}}</div>
+            {% endif %}
+              
+            {% endfor %}
+          {% endif %}
+           
+            <div class="row">
+                    <div class="form-group col-12">
+                        <label>Nombre del Periodo</label>
+                        <input type="text" class="form-control" name="nombre">
+                    </div>
+                    <div class="form-group col-6">
+                        <label>Fecha de Inicio</label>
+                        <input type="date" class="form-control" name="inicio">
+                    </div>
+                    <div class="form-group col-6">
+                        <label>Fecha de Fin</label>
+                        <input type="date" class="form-control" name="fin">
+                    </div>
+            </div>
+            <div class="form-group d-flex justify-content-center">             
+                <button class="btn btn-dark" type="submit"><i class="fas fa-save"></i>    Guardar</button>
+            </div>
+            
+        </form>
+          
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+          Footer
+        </div>
+        <!-- /.card-footer-->
+      </div>
+      <!-- /.card -->
+
+{% endblock content %}

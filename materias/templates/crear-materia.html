@@ -1,0 +1,74 @@
+{% extends 'layouts/layout.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}Añadir Materia{% endblock title %}
+{% block titulo %}Añadir Materia{% endblock titulo %}
+
+{% block content %}
+
+     <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Datos de la Materia</h3>
+          
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+              <i class="fas fa-minus"></i></button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+              <i class="fas fa-times"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+        <form method="POST">
+          {% csrf_token %}
+          {% if messages %}
+            {% for message in messages %}
+            {% if message.tags == 'success' %}
+              <div class="alert alert-success col-12 d-flex justify-content-center" role="alert">{{message}}</div>  
+            {% else %}
+              <div class="alert alert-danger col-12 d-flex justify-content-center" role="alert">{{message}}</div>
+            {% endif %}              
+            {% endfor %}
+          {% endif %}
+          
+                <div class="form-group">
+                  <label>Nombre</label>
+                  <input type="text" class="form-control" name="nombre">
+                </div>
+                <div class="form-group">
+                        <label>Grupos</label>
+                        <select class="form-control" name="grupos">
+                          <option disabled selected>Selecciona un grupo</option>
+                          {% for grupo in grupos %}
+                            <option value='{{grupo.id}}'>{{grupo.nombre}}</option>
+                          {% endfor %}
+                        </select>      
+                    </div>
+                    <div class="form-group">
+                        <label>Maestro</label>
+                        <select class="form-control" name="maestro">
+                          <option disabled selected>Asigna un maestro a la materia</option>
+                          {% for maestro in maestros %}
+                            <option value='{{maestro.id}}'>{{maestro.first_name}} {{maestro.last_name}}</option>
+                          {% endfor %}
+                        </select>      
+                    </div>
+
+
+            <div class="form-group d-flex justify-content-center">
+              <button class="btn btn-dark" type="submit"><i class="fas fa-save"></i>    Guardar</button>
+            </div>
+            
+        </form>
+          
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+          Footer
+        </div>
+        <!-- /.card-footer-->
+      </div>
+      <!-- /.card -->
+
+{% endblock content %}
