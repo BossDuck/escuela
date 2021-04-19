@@ -26,7 +26,7 @@ urlpatterns = [
     path('', include('alumnos.urls')),
     path('', include('calendario.urls')),
     path('', include('calificaciones.urls'))
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
 #Carga de imagenes y ficheros
